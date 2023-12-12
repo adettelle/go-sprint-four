@@ -100,11 +100,12 @@ const (
 // duration float64 — длительность тренировки в часах.
 // weight float64 — вес пользователя.
 // height float64 — рост пользователя в см.
+// ((0.035 * ВесСпортсменаВКг + (СредняяСкоростьВМетрахВСекунду**2 / РостВМетрах) * 0.029 * ВесСпортсменаВКг) * ВремяТренировкиВЧасах * minInH)
 func WalkingSpentCalories(action int, duration, weight, height float64) float64 {
 	// ваш код здесь
 	speed := meanSpeed(action, duration) // скорость в км/ч
-	speedInMS := speed * 1000 / 3600     // скорость в м/с
-	calories := walkingCaloriesWeightMultiplier*weight + (math.Pow(speedInMS, 2)/height/cmInM)*walkingSpeedHeightMultiplier*weight
+	speedInMS := speed * kmhInMsec       // скорость в м/с
+	calories := walkingCaloriesWeightMultiplier*weight + (math.Pow(speedInMS, 2)/(height/cmInM))*walkingSpeedHeightMultiplier*weight
 	return calories * duration * minInH
 }
 
